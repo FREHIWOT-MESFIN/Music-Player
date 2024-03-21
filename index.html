@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="./style.css">
+    <title>Music Player</title>
+</head>
+<body>
+     <div class="nav-container">
+
+        <div class="mobile-nav">
+            <div class="hamburger-menu">
+
+            </div>
+            <div class="logo">
+
+            </div>
+            <div class="search-bar">
+
+            </div>
+            <div class="profile">
+
+            </div>
+            <div class="folder-acc">
+
+            </div>
+        </div>
+<!---Desktop nav-->
+
+
+            <div class="desktop-nav">
+                <div class="logo">
+                    <p>
+                        <i class='bx bxl-deezer logo'></i>Her Music
+                    </p>
+                </div>
+                <br>
+                <div class="menu">
+                    <p class="recent">
+                        <i class='bx bx-time'></i>
+                        Recently played</p>
+                    <p class="all"><i class='bx bx-search'></i>Browse all</p>
+                </div>
+                <br>
+                <div class="filter">
+                   <ul class="filter-list">
+                    <li class="fil"><i class='bx bx-album'></i>Albums</li>
+                    <li class="fil"><i class='bx bxs-playlist'></i>Playlists</li>
+                    <li class="fil"><i class='bx bxs-music'></i>Artists</li>
+                    <li class="fil"><i class='bx bx-heart'></i>Favorites</li>
+                   </ul>
+                </div>
+                <br>
+                <div class="menu-fun">
+                    <p class="new-paylist"><i class='bx bx-add-to-queue'></i>New Playlist</p>
+                    <p class="add-song"><i class='bx bx-add-to-queue'></i>Add Song</p>
+                </div>
+            </div>
+        
+     </div>
+
+     <!--Hero section start-->
+
+    <div class="home-container">
+
+        <div class="mini-nav">
+            <div class="mini-search">
+                <i class='bx bx-search'></i>
+                <input type="text" placeholder="Search">
+            </div>
+           
+
+        </div>
+        <div class="content">
+            <div class="playing-state">
+                <div class="song-playing">
+                    
+                    <img src="./images/discImage.jpg" alt="disc">
+                    <div class="song-details">
+                        <h4 class="song-name">Song name</h4>
+                        <p class="artist-name">artist name</p>
+                    </div>
+                   
+                </div>
+                <div class="playing-bot">   
+                    <img src="./images/discImage.jpg" alt="disc">
+                    <div class="song-details">
+                        <h4 class="song-name">Song name</h4>
+                        <p class="artist-name">artist name</p>
+                    </div>
+                    <div class="controls-playing">
+                        <i class='bx bx-skip-previous bx-md'></i>
+                        <i class='bx bx-play bx-md'></i>
+                        <i class='bx bx-skip-next bx-md'></i>
+                     </div>
+                </div>
+            </div>
+
+            <div class="all-songs">
+               <!-- <div class="song-card">
+                    <div class="song-info1">
+                        <i class='bx bx-play bx-sm'></i>
+                        <img src="./images/discImage.jpg" alt="disc">
+                        <div class="song-details">
+                            <h4 class="song-name">Song name</h4>
+                            <p class="artist-name">artist name</p>
+                        </div>
+                       
+                        <audio class="song" src="./audios/song4.m4a"></audio>
+                         <div class="controls">
+                            <i class='bx bx-skip-previous'></i>
+                            <i class='bx bx-play'></i>
+                            <i class='bx bx-skip-next'></i>
+                         </div>
+                    </div>
+                    <div class="song-info2">
+                        <p>Album name</p>
+                    </div>
+                    <div class="duration">
+                        3:00
+                    </div>
+                </div>-->
+
+            </div>
+
+        </div>
+    </div>
+
+    <script src="./index.js"></script>
+</body>
+</html>
