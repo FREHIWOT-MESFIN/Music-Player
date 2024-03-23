@@ -4,11 +4,15 @@
     box-sizing: border-box;
 }
 body {
+    font-family: 'Times New Roman', Times, serif;
     min-height: 100vh;
     background: linear-gradient(to bottom, rgb(255, 153, 153), white);
 }
 .mobile-nav{
     display: none;
+}
+.isFavorite{
+    background: rgb(255, 153, 153);
 }
 .desktop-nav{
     position: fixed;
@@ -36,13 +40,43 @@ body {
 .menu-fun p{
     margin-bottom: 10px;
 }
-
-
+.theme{
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 5px;
+}
+.theme:hover{
+    background: white;
+}
 .home-container{
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 153, 153, 0.2));
     margin: 1rem 1rem 1rem 16%;
     height: 95vh;
     border-radius: 25px;
+}
+.mini-nav{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.5rem;
+}
+.mini-nav .mini-search{
+    width: 300px;
+    background: white;
+    padding: 5px;
+    border-radius: 8px;
+}
+.mini-nav input{
+    width: 250px;
+    border: none;
+    outline: none;
+    line-height: 1.4;
+    padding: 5px 10px;
+   
+}
+.mini-nav .greeting{
+    margin-right: 2rem;
+    font-size: 1.2rem;
 }
 .content{
     display: flex;
@@ -79,26 +113,13 @@ body {
     height: 50px;
     border-radius: 50%;
 }
+.playing-bot > .song-details{
+    display: flex;
+}
 .playing-bot .controls-playing{
     text-align: center;
 }
-.mini-nav{
-    padding: 1.5rem;
-}
-.mini-nav .mini-search{
-    width: 300px;
-    background: white;
-    padding: 5px;
-    border-radius: 8px;
-}
-.mini-nav input{
-    width: 250px;
-    border: none;
-    outline: none;
-    line-height: 1.4;
-    padding: 5px 10px;
-   
-}
+
 .all-songs{
   /*  background: yellow;*/
     height: 400px;
