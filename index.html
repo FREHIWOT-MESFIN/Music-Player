@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
     <link rel="stylesheet" href="./style.css">
     <title>Music Player</title>
 </head>
@@ -61,6 +62,7 @@
      </div>
 
      <!--Hero section start-->
+<div class="home-section">
 
     <div class="home-container">
 
@@ -94,7 +96,7 @@
                         </div>
                     </div>
                     <div class="controls-playing">
-                        <i class='bx bx-heart'></i>
+                        <i class='bx bx-heart isFavorite'></i>
                         <i class='bx bx-sync'></i>
                         <i class='bx bx-skip-previous bx-md'></i>
                         <i class='bx bx-play bx-md'></i>
@@ -107,10 +109,12 @@
             <div class="all-songs">
                   <!--Dynamic content-->
             </div>
-
+            <div class="recent-songs">
+                <!--Dynamic content-->
+            </div>
         </div>
     </div>
-
+</div>
     <script src="./index.js"></script>
 </body>
 </html>
