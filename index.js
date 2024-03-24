@@ -1,19 +1,14 @@
+import songs from './songsDATA.js'
+
 let allSongs = document.querySelector(".all-songs");
 let playingState = document.querySelector(".playing-state");
-let songs = [
-    { name: "song1", artistName: "Artist 1", isFavorite: false },
-    { name: "song2", artistName: "Artist 2", isFavorite: false  },
-    { name: "song3", artistName: "Artist 3", isFavorite: false  },
-    { name: "song4", artistName: "Artist 4", isFavorite: false  },
-    { name: "song5", artistName: "Artist 5", isFavorite: false  },
-    { name: "song6", artistName: "Artist 6", isFavorite: false  }
-];
+
 
 songs.forEach(song => {
-    createSongCard(song.name, song.artistName);
+    createSongCard(song.id, song.songName, song.artistName);
 });
 
-function createSongCard(songName, artistName) {
+function createSongCard(id, songName, artistName) {
     let songCard = document.createElement("div");
     songCard.classList.add("song-card");
 
@@ -35,7 +30,7 @@ function createSongCard(songName, artistName) {
     songDetails.appendChild(artistNameElem);
     let songEle = document.createElement("audio");
     songEle.classList.add("song");
-    songEle.src = `./audios/${songName}.mp3`;
+    songEle.src = `./audios/${id}.mp3`;
     let controls = document.createElement("div");
     controls.classList.add("controls");
     let heart = document.createElement("span");
