@@ -1,6 +1,6 @@
-let content = document.querySelector(".content")
+let content = document.querySelector(".content");
 
-function playingState(){
+function playingState(songName, artistName){
     let playingState = document.createElement("div");
     playingState.classList.add("playing-state");
         let progress = document.createElement("div");
@@ -13,8 +13,10 @@ function playingState(){
             songDetails.classList.add("song-details");
                 let h4 = document.createElement("h4");
                 h4.classList.add("song-name");
+                h4.textContent = songName;
                 let p = document.createElement("p");
                 p.classList.add("artist-name");
+                p.textContent = artistName;
             songDetails.appendChild(h4);
             songDetails.appendChild(p);
         songPlaying.appendChild(img);
@@ -23,12 +25,20 @@ function playingState(){
         playingBot.classList.add("playing-bot");
             let songDetailss = document.createElement("div");
             songDetailss.classList.add("song-details");
+              let img1 = document.createElement("img");
+              img1.src = "./images/discImage.jpg";
+              let sub = document.createElement("div")
+              sub.classList.add("sub");
                 let h4ss = document.createElement("h4");
                 h4ss.classList.add("song-name");
+                h4ss.textContent = songName;
                 let ps = document.createElement("p");
                 ps.classList.add("artist-name");
-            songDetailss.appendChild(h4ss);
-            songDetailss.appendChild(ps);
+                ps.textContent = artistName;
+              sub.appendChild(h4ss);
+              sub.appendChild(ps);
+            songDetailss.appendChild(img1);
+            songDetailss.appendChild(sub);
             let controlsPl = document.createElement("div");
             controlsPl.classList.add("controls-playing")
                 let i = document.createElement("span");
@@ -49,13 +59,24 @@ function playingState(){
             controlsPl.appendChild(i3);
             controlsPl.appendChild(i4);
             controlsPl.appendChild(i5);
+            let volume = document.createElement("div");
+            volume.classList.add("volume");
+              let iv = document.createElement("span");
+              iv.innerHTML = "<i class='bx bxs-volume-full'></i>";
+              let vprogress = document.createElement("div");
+              vprogress.classList.add("vprogress");
+            volume.appendChild(iv);
+            volume.appendChild(vprogress);
         playingBot.appendChild(songDetailss);
         playingBot.appendChild(controlsPl);  
-    playingState.appendChild(progress)
-    playingState.appendChild(songDetails)
-    playingState.appendChild(playingBot)     
+        playingBot.appendChild(volume);
+        playingBot.appendChild(progress);
+    playingState.appendChild(songPlaying);
+    playingState.appendChild(playingBot);    
     
-  content.appendChild(playingState)  
+    let allSongs = content.querySelector(".all-songs");
+
+    content.insertBefore(playingState, allSongs);
 }  
 
 export { playingState };

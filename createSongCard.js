@@ -30,6 +30,9 @@ function createSongCard(id, songName, artistName) {
     heart.innerHTML = "<i class='bx bx-heart'></i>"
     let wave = document.createElement("div");
     wave.classList.add("wave")
+    let duration = document.createElement("div")
+    duration.classList.add("duration")
+    duration.textContent = songEle.duration
     controls.appendChild(heart);
     controls.appendChild(wave);
     songInfo1.appendChild(i);
@@ -39,6 +42,7 @@ function createSongCard(id, songName, artistName) {
 
     songCard.appendChild(songInfo1);
     songCard.appendChild(controls);
+    songCard.appendChild(duration);
     allSongs.appendChild(songCard);
 }
 export { createSongCard };
