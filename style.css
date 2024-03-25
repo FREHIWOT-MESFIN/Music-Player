@@ -211,5 +211,12 @@ i{
     .mini-search{
         display: none;
     }
+    .content{
+        flex-direction: column;
+    }
+    .playing-state img{
+        width: 200px;
+        height: 20px;
+    }
   }
   
