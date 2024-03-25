@@ -172,6 +172,7 @@ function prevSong(e) {
 }
 
 // Function to play the next song
+
 function nextSong(e) {
     function findPlayingParentDiv() {
         let allAudios = document.querySelectorAll("audio");
@@ -262,39 +263,6 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('bx-skip-previous')) {
         prevSong(event)
     }
-    if (event.target.classList.contains('bx-play')){
-        let allAudios = document.querySelectorAll("audio");
-        for (let i = 0; i < allAudios.length; i++) {
-            let audio = allAudios[i];
-            if (audio.played) {
-                audio.parentElement.parentElement.querySelector('.song-info > span i').classList.remove('bx-play');
-                audio.parentElement.parentElement.querySelector('.song-info > span i').classList.add('bx-pause');
-            }else{
-                audio.parentElement.parentElement.querySelector('.song-info > span i').classList.remove('bx-pause');
-                audio.parentElement.parentElement.querySelector('.song-info > span i').classList.add('bx-play');
-            }
-        }
-    }
+   
 });
 
-/*
-shufflE.addEventListener("click", function() {
-    // Handle shuffle functionality
-    shuffle()
-    console.log("Shuffle clicked");
-    // Implement your logic here
-});
-
-repeaT.addEventListener("click", function() {
-    // Handle repeat functionality
-    repeat()
-    console.log("Repeat clicked");
-    // Implement your logic here
-});
-heart.addEventListener("click", function() {
-    // Handle repeat functionality
-    favorite()
-    console.log("Repeat clicked");
-    // Implement your logic here
-});
-*/
