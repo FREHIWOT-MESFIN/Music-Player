@@ -2,6 +2,9 @@ import songs from './songsDATA.js';
 import { createSongCard } from './createSongCard.js';
 import { playingState } from './playingState.js';
 
+let playlists = document.querySelector('#playlists');
+let artists = document.querySelector('#artists');
+let favorites = document.querySelector('#favorites');
 
 let currentSongIndex = 0;
 
@@ -115,7 +118,7 @@ function album() {
 
 ////playlists function
 
-function playlists() {
+function playLists() {
     songs.forEach(song => {
         createSongCard(song.name, song.artistName);
     });
@@ -124,7 +127,7 @@ function playlists() {
 
 ////artists function
 
-function artists() {
+function artIsts() {
     songs.forEach(song => {
         createSongCard(song.name, song.artistName);
     });
@@ -132,7 +135,7 @@ function artists() {
 }
 //////favorites
 
-function favorites() {
+function favoRites() {
   let favorite = document.querySelector("i :has(.bx-heart)");
   if(favorite){
     console.log("favorited")
@@ -263,6 +266,41 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('bx-skip-previous')) {
         prevSong(event)
     }
-   
+    if (event.target.classList.contains('bx-play')){
+        let allAudios = document.querySelectorAll("audio");
+        for (let i = 0; i < allAudios.length; i++) {
+            let audio = allAudios[i];
+            if (!audio.paused && audio.currentTime > 0) {
+                let is = audio.parentElement.parentElement.querySelector('.song-info > span i').classList;
+          console.log(is)
+            }
+        }
+   }
 });
 
+artists.addEventListener('click', () => {
+    let content = document.querySelector('.content');
+    content.innerHTML = '';
+    
+    // Count the occurrences of each artist name
+    let artistCounts = songs.reduce((counts, song) => {
+        counts[song.artistName] = (counts[song.artistName] || 0) + 1;
+        return counts;
+    }, {});
+
+    // Filter the artist names that appear more than once
+    let duplicateArtists = Object.keys(artistCounts).filter(artistName => {
+        return artistCounts[artistName] > 1;
+    });
+
+    // Iterate over the duplicate artist names and create song cards
+    duplicateArtists.forEach(artistName => {
+        // Filter songs with the current duplicate artist name
+        let filteredSongs = songs.filter(song => song.artistName === artistName);
+        
+        // Create song cards for each filtered song
+        filteredSongs.forEach(song => {
+            createSongCard(song.songName, song.artistName);
+        });
+    });
+});

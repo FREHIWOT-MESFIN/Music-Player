@@ -34,8 +34,14 @@ let songs = [
         songName: "Woman",
         artistName: "Kesha", 
         isFavorite: false
+    },
+    { 
+        id: "song7", 
+        songName: "Yes I am",
+        artistName: "MAMAMOO", 
+        isFavorite: false
     }
-    // Add more songs as needed
+  
 ];
 
 export default songs;
