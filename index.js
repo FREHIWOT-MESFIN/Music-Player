@@ -37,18 +37,15 @@ songCards.forEach(songCard => {
             playingState(songName, artistName)
             songCard.classList.add("isPlaying")
             controls.style.visibility = "visible";
-            let bxPlay = document.querySelector(".bx-play");
-            bxPlay.click(); 
         } else {
             pause(audio, songInfoi);
             songInfoi.style.display = "block";
             controls.children[1].style.visibility = "hidden";
-            let bxPause = document.querySelector(".bx-pause");
-            bxPause.click(); 
         }
     });
     
     audio.addEventListener('timeupdate', updateProgress);
+    audio.addEventListener('ended', nextSong)
 });
 
 /////play function
@@ -164,7 +161,7 @@ function prevSong(e) {
         let allAudios = document.querySelectorAll("audio");
         for (let i = 0; i < allAudios.length; i++) {
             let audio = allAudios[i];
-            if (!audio.paused && audio.currentTime > 0) {
+            if (audio.currentTime > 0) {
                 return audio.parentElement.parentElement; 
             }
         }
@@ -186,7 +183,7 @@ function nextSong(e) {
         let allAudios = document.querySelectorAll("audio");
         for (let i = 0; i < allAudios.length; i++) {
             let audio = allAudios[i];
-            if (!audio.paused && audio.currentTime > 0) {
+            if (audio.currentTime > 0) {
                 return audio.parentElement.parentElement;
             }
         }
@@ -249,10 +246,11 @@ function shuffleArray(array) {
 //////updateprogress function
 
 function updateProgress(e){
-    let progress = document.querySelector(".progress")
+    let progress = document.querySelectorAll(".progress")
     const {duration, currentTime} = e.srcElement
     const progressPercent = (currentTime / duration) * 100
-    progress.style.width = `${progressPercent}%`
+    progress.forEach(pro=>  pro.style.width = `${progressPercent}%`)
+  
 }
 ///////setprogress
 
@@ -271,33 +269,7 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('bx-skip-previous')) {
         prevSong(event)
     }
-    if (event.target.classList.contains('bx-play')){
-        let songCard = event.target.closest('.song-card'); // Find the closest parent song card
-        if (songCard) {
-            let audio = songCard.querySelector('.song'); // Find the associated audio element within that card
-            if (audio) {
-                if (!audio.paused && audio.currentTime > 0) {
-                    audio.pause();
-                    event.target.classList.remove("bx-pause");
-                    event.target.classList.add("bx-play");
-                    let songInfoi = songCard.querySelector(".song-info1 > span i"); // Find the song info icon
-                    if (songInfoi) {
-                        songInfoi.classList.remove("bx-pause");
-                        songInfoi.classList.add("bx-play");
-                    }
-                } else {
-                    audio.play();
-                    event.target.classList.remove("bx-play");
-                    event.target.classList.add("bx-pause");
-                    let songInfoi = songCard.querySelector(".song-info1 > span i"); // Find the song info icon
-                    if (songInfoi) {
-                        songInfoi.classList.remove("bx-play");
-                        songInfoi.classList.add("bx-pause");
-                    }
-                }
-            }
-        }
-    }
+ 
 });
 
 artists.addEventListener('click', () => {

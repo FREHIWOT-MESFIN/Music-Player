@@ -47,8 +47,7 @@ function playingState(songName, artistName){
                 i1.innerHTML = " <i class='bx bx-sync'></i>";
                 let i2 = document.createElement("span");
                 i2.innerHTML = " <i class='bx bx-skip-previous bx-md'></i>";
-                let i3 = document.createElement("span");
-                i3.innerHTML = "<i class='bx bx-play bx-md'></i>";
+        
                 let i4 = document.createElement("span");
                 i4.innerHTML = "<i class='bx bx-skip-next bx-md'></i>";
                 let i5 = document.createElement("span");
@@ -56,7 +55,7 @@ function playingState(songName, artistName){
             controlsPl.appendChild(i);
             controlsPl.appendChild(i1);
             controlsPl.appendChild(i2);
-            controlsPl.appendChild(i3);
+           
             controlsPl.appendChild(i4);
             controlsPl.appendChild(i5);
             let volume = document.createElement("div");
