@@ -32,7 +32,14 @@ function createSongCard(id, songName, artistName) {
     wave.classList.add("wave")
     let duration = document.createElement("div")
     duration.classList.add("duration")
-    duration.textContent = songEle.duration
+    songEle.addEventListener('loadedmetadata', function() {
+        
+    let totalSeconds = Math.floor(songEle.duration);
+    let minutes = Math.floor(totalSeconds / 60);
+    let seconds = Math.floor(totalSeconds % 60);
+
+    duration.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+    });
     controls.appendChild(heart);
     controls.appendChild(wave);
     songInfo1.appendChild(i);

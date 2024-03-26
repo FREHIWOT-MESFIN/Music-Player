@@ -11,6 +11,10 @@ body {
 i{
     cursor: pointer;
 }
+a{
+    text-decoration: none;
+    color: black;
+}
 .mobile-nav{
     display: none;
 }
