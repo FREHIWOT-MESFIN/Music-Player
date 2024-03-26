@@ -223,6 +223,16 @@ a{
         position: absolute;
         top: -100%;
     }
+    .mobile-search .active{
+        top: 50px;
+        width: 100%;
+    }
+    .mobile-menu{
+        position: absolute;
+        top: 50px;
+        width: 100%;
+        background: white;
+    }
     .home-section{
         top: 50px;
         margin: 1rem;
