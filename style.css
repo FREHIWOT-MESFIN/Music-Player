@@ -136,9 +136,16 @@ a{
 .playing-bot .controls-playing{
     text-align: center;
 }
-.progress{
+.progress-container{
     position: absolute;
     top: 0;
+    background-color: wheat;
+    border-radius: 5px;
+    height: 4px;
+    width: 100%;
+    cursor: pointer;
+}
+.progress{
     background-color: rgb(255, 153, 153);
     border-radius: 5px;
     height: 4px;
@@ -146,6 +153,10 @@ a{
 }
 .isPlaying{
     background: rgba(255, 255, 255, 0.2);
+}
+.isFavorite{
+    background-color: rgb(255, 153, 153);
+    color: hsl(0, 100%, 65%);
 }
 .all-songs{
     font-family: "Poppins", sans-serif;

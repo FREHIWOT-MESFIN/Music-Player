@@ -2,11 +2,14 @@ import songs from './songsDATA.js';
 import { createSongCard } from './createSongCard.js';
 import { playingState } from './playingState.js';
 
+let recently = document.querySelector('#recently-p');
+let browse = document.querySelector('#b-all');
 let playlists = document.querySelector('#playlists');
 let artists = document.querySelector('#artists');
 let favorites = document.querySelector('#favorites');
 
 let currentSongIndex = 0;
+let favorited = [];
 
 //////////////render songs
 
@@ -34,7 +37,7 @@ songCards.forEach(songCard => {
         if (songInfoi.classList.contains("bx-play")) {
             play(audio, songInfoi, songCard, controls);
             songInfoi.style.display = "block";
-            playingState(songName, artistName)
+            playingState(audio, songName, artistName)
             songCard.classList.add("isPlaying")
             controls.style.visibility = "visible";
         } else {
@@ -46,6 +49,7 @@ songCards.forEach(songCard => {
     
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('ended', nextSong)
+   console.log(audio.currentTime)
 });
 
 /////play function
@@ -88,53 +92,36 @@ function recentlyPlayed() {
     let audioElements = document.querySelectorAll('.audio');
     
     audioElements.forEach(audio => {
-        if (audio.played) {
+        if (audio.currentTime > 0) {
             recent.push(audio);
         }
     });
     
-    let div = document.querySelector('.recent-songs');
+    let div = document.querySelector('.content');
+    div.innerHTML = '';
     
     recent.forEach(song => {
         div.appendChild(createSongCard(song));
     });
 }
 
+
 /////browse all function
 
 function browseAll() {
-    songs.forEach(song => {
-        createSongCard(song.name, song.artistName);
-    });
-    
+  
 }
 
-/////album function
-
-function album() {
-    songs.forEach(song => {
-        createSongCard(song.name, song.artistName);
-    });
-    
-}
 
 ////playlists function
 
 function playLists() {
     songs.forEach(song => {
-        createSongCard(song.name, song.artistName);
+        createSongCard(song.id, song.songName, song.artistName);
     });
     
 }
 
-////artists function
-
-function artIsts() {
-    songs.forEach(song => {
-        createSongCard(song.name, song.artistName);
-    });
-    
-}
 //////favorites
 
 function favoRites() {
@@ -201,23 +188,28 @@ function nextSong(e) {
 
 // Function to shuffle the songs
 function shuffle() {
-    songs = shuffleArray(songs); // Shuffle the songs array
+   songs = shuffleArray(songs); // Shuffle the songs array
     console.log("Shuffled songs:", songs);
     // Implement logic to reflect shuffled songs in the UI if needed
 }
 
 // Function to toggle favorite status of the current song
-function favorite() {
+
+function favorite(e) {
     let currentSong = songs[currentSongIndex];
     currentSong.isFavorite = !currentSong.isFavorite;
     if (currentSong.isFavorite) {
         console.log("Song is now favorite.");
-        // Implement logic to reflect favorite status in the UI if needed
+        e.target.classList.add('isFavorite');
+        favorited.push(currentSong);
     } else {
         console.log("Song is no longer favorite.");
-        // Implement logic to reflect favorite status in the UI if needed
+        e.target.classList.remove('isFavorite');
+        // Remove the current song from the favorited array
+        favorited = favorited.filter(song => song !== currentSong);
     }
 }
+
 
 // Function to toggle repeat mode
 let isRepeatOn = false; // Flag to indicate if repeat mode is on
@@ -252,12 +244,7 @@ function updateProgress(e){
     progress.forEach(pro=>  pro.style.width = `${progressPercent}%`)
   
 }
-///////setprogress
 
-function setProgress(e){
-    let width = this.clientWidth
-    console.log(width)
-}
 ////////event listeners//////////////////////////////////
 
 
@@ -269,32 +256,68 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('bx-skip-previous')) {
         prevSong(event)
     }
- 
+    if (event.target.classList.contains('bx-shuffle')) {
+        shuffle()
+    }
+    if (event.target.classList.contains('bx-sync')) {
+        repeat()
+    }
+    if (event.target.classList.contains('bx-heart')) {
+       favorite()
+    }
 });
 
 artists.addEventListener('click', () => {
     let content = document.querySelector('.content');
     content.innerHTML = '';
-    
-    // Count the occurrences of each artist name
+
     let artistCounts = songs.reduce((counts, song) => {
         counts[song.artistName] = (counts[song.artistName] || 0) + 1;
         return counts;
     }, {});
 
-    // Filter the artist names that appear more than once
     let duplicateArtists = Object.keys(artistCounts).filter(artistName => {
         return artistCounts[artistName] > 1;
     });
 
-    // Iterate over the duplicate artist names and create song cards
     duplicateArtists.forEach(artistName => {
-        // Filter songs with the current duplicate artist name
         let filteredSongs = songs.filter(song => song.artistName === artistName);
         
-        // Create song cards for each filtered song
         filteredSongs.forEach(song => {
             createSongCard(song.songName, song.artistName);
         });
+    });
+});
+
+recently.addEventListener('click', recentlyPlayed)
+browse.addEventListener('click', browseAll)
+
+
+// Assuming you have a search input field with id "search-input"
+let searchInput = document.getElementById('search-fun');
+let input = document.getElementById('search-input');
+// Attach an event listener to the input field
+searchInput.addEventListener('click', function() {
+    // Get the search query entered by the user
+    let query = input.value.toLowerCase().trim();
+
+    // Get the container where search results will be displayed
+    let searchResultsContainer = document.querySelector('.content')
+    // Clear previous search results
+    searchResultsContainer.innerHTML = '';
+
+    // Filter songs based on the search query
+    let matchingSongs = songs.filter(song => {
+        // Customize this condition based on your search requirements
+        return (
+            song.songName.toLowerCase().includes(query) ||
+            song.artistName.toLowerCase().includes(query)
+        );
+    });
+
+    // Display search results
+    matchingSongs.forEach(song => {
+        let songCard = createSongCard(song.id, song.songName, song.artistName);
+        searchResultsContainer.appendChild(songCard);
     });
 });

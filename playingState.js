@@ -1,10 +1,24 @@
 let content = document.querySelector(".content");
+function setProgress(e, audio) {
+  let width = this.clientWidth;
+  let clickX = e.offsetX;
 
-function playingState(songName, artistName){
+  audio.addEventListener('loadedmetadata', function() {
+      let duration = audio.duration;
+      let currentTime = (clickX / width) * duration;
+      audio.currentTime = currentTime;
+      console.log(audio.currentTime); 
+  });
+}
+
+function playingState(audio, songName, artistName){
     let playingState = document.createElement("div");
     playingState.classList.add("playing-state");
-        let progress = document.createElement("div");
-        progress.classList.add("progress");
+        let progresscon = document.createElement("div");
+        progresscon.classList.add("progress-container");
+          let progress = document.createElement("div");
+          progress.classList.add("progress");
+          progresscon.appendChild(progress);
         let songPlaying = document.createElement("div");
         songPlaying.classList.add("song-playing");
             let img = document.createElement("img");
@@ -69,10 +83,12 @@ function playingState(songName, artistName){
         playingBot.appendChild(songDetailss);
         playingBot.appendChild(controlsPl);  
         playingBot.appendChild(volume);
-        playingBot.appendChild(progress);
+        playingBot.appendChild(progresscon);
     playingState.appendChild(songPlaying);
     playingState.appendChild(playingBot);    
     
+    progresscon.addEventListener('click', setProgress.bind(progresscon, audio));
+
     let allSongs = content.querySelector(".all-songs");
 
     content.insertBefore(playingState, allSongs);
