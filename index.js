@@ -37,37 +37,42 @@ songCards.forEach(songCard => {
             playingState(songName, artistName)
             songCard.classList.add("isPlaying")
             controls.style.visibility = "visible";
+            let bxPlay = document.querySelector(".bx-play");
+            bxPlay.click(); 
         } else {
             pause(audio, songInfoi);
             songInfoi.style.display = "block";
             controls.children[1].style.visibility = "hidden";
+            let bxPause = document.querySelector(".bx-pause");
+            bxPause.click(); 
         }
     });
-
+    
     audio.addEventListener('timeupdate', updateProgress);
 });
 
 /////play function
 
 function play(audio, songInfoi, songCard, controls) {
-    let allAudios = document.querySelectorAll(".song");
-    allAudios.forEach(a => {
-        if (a !== audio) {
-            a.load();
-            a.parentElement.parentElement.classList.remove("isPlaying")
-           
-            a.parentElement.parentElement.children[1].style.visibility = "hidden";
-            let previousSibling = a.parentElement.parentElement.parentElement.previousElementSibling;
-            if (previousSibling) {
-                previousSibling.style.display = "none";
+    if (audio.paused || audio.ended) {
+        let allAudios = document.querySelectorAll(".song");
+        allAudios.forEach(a => {
+            if (a !== audio) {
+                a.load();
+                a.parentElement.parentElement.classList.remove("isPlaying")
+                a.parentElement.parentElement.children[1].style.visibility = "hidden";
+                let previousSibling = a.parentElement.parentElement.parentElement.previousElementSibling;
+                if (previousSibling) {
+                    previousSibling.style.display = "none";
+                }
+                a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.classList.add("bx-play")
+                a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.classList.remove(".bx-pause");
             }
-            a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.classList.add("bx-play")
-            a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.classList.remove(".bx-pause");
-        }
-    });
-    audio.play();
-    songInfoi.classList.remove("bx-play");
-    songInfoi.classList.add("bx-pause");
+        });
+        audio.play();
+        songInfoi.classList.remove("bx-play");
+        songInfoi.classList.add("bx-pause");
+    }
 }
 
 /////pause function
@@ -267,15 +272,32 @@ document.addEventListener('click', function(event) {
         prevSong(event)
     }
     if (event.target.classList.contains('bx-play')){
-        let allAudios = document.querySelectorAll("audio");
-        for (let i = 0; i < allAudios.length; i++) {
-            let audio = allAudios[i];
-            if (!audio.paused && audio.currentTime > 0) {
-                let is = audio.parentElement.parentElement.querySelector('.song-info > span i').classList;
-          console.log(is)
+        let songCard = event.target.closest('.song-card'); // Find the closest parent song card
+        if (songCard) {
+            let audio = songCard.querySelector('.song'); // Find the associated audio element within that card
+            if (audio) {
+                if (!audio.paused && audio.currentTime > 0) {
+                    audio.pause();
+                    event.target.classList.remove("bx-pause");
+                    event.target.classList.add("bx-play");
+                    let songInfoi = songCard.querySelector(".song-info1 > span i"); // Find the song info icon
+                    if (songInfoi) {
+                        songInfoi.classList.remove("bx-pause");
+                        songInfoi.classList.add("bx-play");
+                    }
+                } else {
+                    audio.play();
+                    event.target.classList.remove("bx-play");
+                    event.target.classList.add("bx-pause");
+                    let songInfoi = songCard.querySelector(".song-info1 > span i"); // Find the song info icon
+                    if (songInfoi) {
+                        songInfoi.classList.remove("bx-play");
+                        songInfoi.classList.add("bx-pause");
+                    }
+                }
             }
         }
-   }
+    }
 });
 
 artists.addEventListener('click', () => {
