@@ -381,6 +381,9 @@ searchInput.addEventListener('click', function() {
 ///////////////
 let mobileNav = document.querySelector('.mobile-nav')
 let hamburger = document.querySelector('.bx-menu-alt-right')
+let mobileMenu = document.querySelector('.menu-mobile')
+let searchbtn = document.querySelector('.bx-search')
+let mobileInput = document.querySelector('.mobile-search')
 
 window.addEventListener('scroll', ()=>{
     if(scrollY > 20){
@@ -388,4 +391,13 @@ window.addEventListener('scroll', ()=>{
     }else{
         mobileNav.style.backgroundColor = "rgba(255, 255, 255, 0.5)"
     }
+})
+
+hamburger.addEventListener('click', ()=>{
+    console.log('clicked')
+  mobileMenu.classList.toggle('active')
+})
+searchbtn.addEventListener('click', ()=>{
+    console.log('clicked')
+  mobileInput.classList.toggle('active')
 })
