@@ -41,14 +41,15 @@ songCards.forEach(songCard => {
     if (!songCard.classList.contains("isPlaying")) {
         songInfoi.style.display = "none";
     }
+   
     songInfoi.addEventListener("click", () => {
         if (songInfoi.classList.contains("bx-play")) {
             play(audio, songInfoi, songCard, controls);
             songInfoi.style.display = "block";
-            playingState(audio, songName, artistName)
-            songCard.classList.add("isPlaying")
+            playingState(audio, songName, artistName);
+            songCard.classList.add("isPlaying");
             controls.style.visibility = "visible";
-        } else {
+        }else {
             pause(audio, songInfoi);
             songInfoi.style.display = "block";
             controls.children[1].style.visibility = "hidden";
@@ -193,12 +194,6 @@ function nextSong(e) {
     }
 }
 
-// Function to shuffle the songs
-function shuffle() {
-   songs = shuffleArray(songs); // Shuffle the songs array
-    console.log("Shuffled songs:", songs);
-    // Implement logic to reflect shuffled songs in the UI if needed
-}
 
 // favorite toggle function
 
@@ -239,16 +234,6 @@ function repeat(e) {
      
         e.target.style.color = "black"
     }
-}
-
-// Helper function to shuffle an array
-function shuffleArray(array) {
-    let shuffledArray = [...array];
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
-    }
-    return shuffledArray;
 }
 
 //////updateprogress function
@@ -318,6 +303,7 @@ searchInput.addEventListener('click', function() {
     let query = input.value.toLowerCase().trim();
 
     let neighbour = document.querySelector('.playing-state')
+
     if(neighbour){
         neighbour.style.display = 'none';
     }
