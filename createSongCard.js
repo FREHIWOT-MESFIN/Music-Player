@@ -27,7 +27,7 @@ function createSongCard(id, songName, artistName) {
     let controls = document.createElement("div");
     controls.classList.add("controls");
     let heart = document.createElement("span");
-    heart.innerHTML = "<i class='bx bx-heart'></i>"
+    heart.innerHTML = "<i class='bx bx-heart heart'></i>"
     let wave = document.createElement("div");
     wave.classList.add("wave")
     let duration = document.createElement("div")

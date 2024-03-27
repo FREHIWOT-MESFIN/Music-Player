@@ -56,7 +56,7 @@ function playingState(audio, songName, artistName){
             let controlsPl = document.createElement("div");
             controlsPl.classList.add("controls-playing")
                 let i = document.createElement("span");
-                i.innerHTML = " <i class='bx bx-heart'></i>";
+                i.innerHTML = " <i class='bx bx-heart heart'></i>";
                 let i1 = document.createElement("span");
                 i1.innerHTML = " <i class='bx bx-sync'></i>";
                 let i2 = document.createElement("span");

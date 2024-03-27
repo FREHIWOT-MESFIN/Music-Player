@@ -12,7 +12,6 @@ let favorites = document.querySelector('#favorites');
 let searchInput = document.getElementById('search-fun');
 let input = document.getElementById('search-input');
 
-let currentSongIndex = 0;
 let favorited = [];
 
 //////////////render songs
@@ -61,7 +60,6 @@ songCards.forEach(songCard => {
     audio.addEventListener('ended', ()=>{
         controls.children[1].style.visibility = "hidden";
     })
-   console.log(audio.currentTime)
 });
 
 /////play function
@@ -197,19 +195,26 @@ function nextSong(e) {
 
 // favorite toggle function
 
-function favoriteToggle(e) {
-    let currentSong = songs[currentSongIndex];
-    currentSong.isFavorite = !currentSong.isFavorite;
-    if (currentSong.isFavorite) {
-        console.log("Song is now favorite.");
-        e.target.classList.add('isFavorite');
-        favorited.push(currentSong);
-    } else {
-        console.log("Song is no longer favorite.");
-        e.target.classList.remove('isFavorite');
-
-        favorited = favorited.filter(song => song !== currentSong);
+function favoriteToggle(event) {
+    let allAudios = document.querySelectorAll("audio");
+    for (let i = 0; i < allAudios.length; i++) {
+        let audio = allAudios[i];
+        if (audio.currentTime > 0) {
+            let currentSong = audio;
+            currentSong.isFavorite = !currentSong.isFavorite;
+            if (currentSong.isFavorite) {
+                console.log("Song is now favorite.");
+                event.target.classList.add('isFavorite');
+                favorited.push(currentSong);
+            } else {
+                console.log("Song is no longer favorite.");
+                event.target.classList.remove('isFavorite');
+        
+                favorited = favorited.filter(song => song !== currentSong);
+            }
+        }
     }
+    console.log(favorited)
 }
 
 
@@ -263,8 +268,9 @@ document.addEventListener('click', function(event) {
     if (event.target.classList.contains('bx-sync')) {
         repeat()
     }
-    if (event.target.classList.contains('bx-heart')) {
+    if (event.target.classList.contains('heart')) {
         favoriteToggle()
+        
     }
 });
 
