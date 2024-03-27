@@ -5,8 +5,9 @@
 }
 body {
     font-family: 'Times New Roman', Times, serif;
-    min-height: 100vh;
-    background: linear-gradient(to bottom, rgb(255, 153, 153), white);
+    
+    background: linear-gradient(to bottom, rgb(255, 153, 153), rgba(255, 153, 153, 0.5));
+    background-repeat: no-repeat;
 }
 i{
     cursor: pointer;
@@ -61,7 +62,7 @@ a{
     position: relative;
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.5), rgba(255, 153, 153, 0.2));
     margin: 1rem 0.5rem 1rem 17%;
-    height: 95vh;
+    min-height: 95vh;
     border-radius: 25px;
     display: flex;
     align-items: center;
@@ -69,7 +70,7 @@ a{
 }
 .home-container{
     position: absolute;
-    height: 95vh;
+    min-height: 95vh;
     width: 100%;
     border-radius: 25px;
 }
@@ -165,7 +166,7 @@ a{
 }
 .all-songs{
     font-family: "Poppins", sans-serif;
-    height: 400px;
+    min-height: 400px;
     width: 100%;
 }
 .song-card{
