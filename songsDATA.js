@@ -1,47 +1,180 @@
 let songs = [
-    { 
-        id: "song1", 
-        songName: "Confident",
-        artistName: "Demi Lovato", 
-        isFavorite: false
+    {
+      id: "song1",
+      songName: "Confident",
+      artistName: "Demi Lovato",
+      isFavorite: false,
     },
     {
-        id: "song2", 
-        songName: "That’s My Girl",
-        artistName: "Fifth Harmony",
-        isFavorite: false 
+      id: "song2",
+      songName: "That’s My Girl",
+      artistName: "Fifth Harmony",
+      isFavorite: false,
     },
     {
-        id: "song3", 
-        songName: "Wings",
-        artistName: "Little Mix", 
-        isFavorite: false 
-    },
-    { 
-        id: "song4", 
-        songName: "Woman Like Me",
-        artistName: "Little Mix", 
-        isFavorite: false  
+      id: "song3",
+      songName: "Wings",
+      artistName: "Little Mix",
+      isFavorite: false,
     },
     {
-        id: "song5", 
-        songName: "HIP",
-        artistName: "MAMAMOO", 
-        isFavorite: false  
+      id: "song4",
+      songName: "Woman Like Me",
+      artistName: "Little Mix",
+      isFavorite: false,
     },
-    { 
-        id: "song6", 
-        songName: "Woman",
-        artistName: "Kesha", 
-        isFavorite: false
+    {
+      id: "song5",
+      songName: "HIP",
+      artistName: "MAMAMOO",
+      isFavorite: false,
     },
-    { 
-        id: "song7", 
-        songName: "Yes I am",
-        artistName: "MAMAMOO", 
-        isFavorite: false
-    }
+    {
+      id: "song6",
+      songName: "Woman",
+      artistName: "Kesha",
+      isFavorite: false,
+    },
+    {
+      id: "song7",
+      songName: "Run the World (Girls)",
+      artistName: "Beyonce",
+      isFavorite: false,
+    },
+    {
+      id: "song8",
+      songName: "Roar",
+      artistName: "Katy Perry",
+      isFavorite: false,
+    },
+    {
+      id: "song9",
+      songName: "Stronger (What Doesn't Kill You)",
+      artistName: "Kelly Clarkson",
+      isFavorite: false,
+    },
+    {
+      id: "song10",
+      songName: "Girl on Fire",
+      artistName: "Alicia Keys",
+      isFavorite: false,
+    },
+    {
+      id: "song11",
+      songName: "Brave",
+      artistName: "Sara Bareilles",
+      isFavorite: false,
+    },
+    {
+      id: "song12",
+      songName: "Independent Women Part I",
+      artistName: "Destiny's Child",
+      isFavorite: false,
+    },
+    {
+      id: "song13",
+      songName: "Can't Hold Us Down",
+      artistName: "Christina Aguilera",
+      isFavorite: false,
+    },
+    {
+      id: "song14",
+      songName: "Flawless",
+      artistName: "Beyonce",
+      isFavorite: false,
+    },
+    {
+      id: "song15",
+      songName: "I'm Every Woman",
+      artistName: "Chaka Khan",
+      isFavorite: false,
+    },
+    {
+      id: "song16",
+      songName: "Juice",
+      artistName: "Lizzo",
+      isFavorite: false,
+    },
+    {
+      id: "song17",
+      songName: "Who Says",
+      artistName: "Selena Gomez & The Scene",
+      isFavorite: false,
+    },
+    {
+      id: "song18",
+      songName: "Beautiful",
+      artistName: "Christina Aguilera",
+      isFavorite: false,
+    },
+    {
+      id: "song19",
+      songName: "Just A Girl",
+      artistName: "No Doubt",
+      isFavorite: false,
+    },
+    {
+      id: "song20",
+      songName: "Brave Honest Beautiful",
+      artistName: "Fifth Harmony",
+      isFavorite: false,
+    },
+    {
+      id: "song21",
+      songName: "Run the World (Girls) [Glee Cast Version]",
+      artistName: "Glee Cast",
+      isFavorite: false,
+    },
+    {
+      id: "song22",
+      songName: "Fight",
+      artistName: "Icon For Hire",
+      isFavorite: false,
+    },
+    {
+      id: "song23",
+      songName: "I Am Woman",
+      artistName: "Helen Reddy",
+      isFavorite: false,
+    },
+    {
+      id: "song24",
+      songName: "Scars to Your Beautiful",
+      artistName: "Alessia Cara",
+      isFavorite: false,
+    },
+    {
+      id: "song25",
+      songName: "Good As Hell",
+      artistName: "Lizzo",
+      isFavorite: false,
+    },
+    {
+      id: "song26",
+      songName: "I'm a Woman",
+      artistName: "Koko Taylor",
+      isFavorite: false,
+    },
+    {
+      id: "song27",
+      songName: "Wonder Woman",
+      artistName: "LION BABE",
+      isFavorite: false,
+    },
+    {
+      id: "song28",
+      songName: "9 To 5",
+      artistName: "Dolly Parton",
+      isFavorite: false,
+    },
+    {
+      id: "song29",
+      songName: "Unstoppable",
+      artistName: "Sia",
+      isFavorite: false,
+    },
+    // Add more songs as needed
+  ];
   
-];
-
-export default songs;
+  export default songs;
+  

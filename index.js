@@ -2,11 +2,15 @@ import songs from './songsDATA.js';
 import { createSongCard } from './createSongCard.js';
 import { playingState } from './playingState.js';
 
+
+
 let recently = document.querySelector('#recently-p');
 let browse = document.querySelector('#b-all');
 let playlists = document.querySelector('#playlists');
 let artists = document.querySelector('#artists');
 let favorites = document.querySelector('#favorites');
+let searchInput = document.getElementById('search-fun');
+let input = document.getElementById('search-input');
 
 let currentSongIndex = 0;
 let favorited = [];
@@ -44,7 +48,6 @@ songCards.forEach(songCard => {
             playingState(audio, songName, artistName)
             songCard.classList.add("isPlaying")
             controls.style.visibility = "visible";
-            controls.children[1].style.visibility = "visible";
         } else {
             pause(audio, songInfoi);
             songInfoi.style.display = "block";
@@ -54,6 +57,9 @@ songCards.forEach(songCard => {
     
     audio.addEventListener('timeupdate', updateProgress);
     audio.addEventListener('ended', nextSong)
+    audio.addEventListener('ended', ()=>{
+        controls.children[1].style.visibility = "hidden";
+    })
    console.log(audio.currentTime)
 });
 
@@ -67,6 +73,7 @@ function play(audio, songInfoi, songCard, controls) {
                 a.load();
                 a.parentElement.parentElement.classList.remove("isPlaying")
                 a.parentElement.parentElement.children[1].style.visibility = "hidden";
+                a.parentElement.parentElement.children[1].children[1].style.visibility = "hidden";
                 let previousSibling = a.parentElement.parentElement.parentElement.previousElementSibling;
                 if (previousSibling) {
                     previousSibling.style.display = "none";
@@ -79,6 +86,7 @@ function play(audio, songInfoi, songCard, controls) {
         audio.play();
         songInfoi.classList.remove("bx-play");
         songInfoi.classList.add("bx-pause");
+        controls.children[1].style.visibility = "visible";
     }
 }
 
@@ -93,6 +101,7 @@ function pause(audio, songInfoi) {
 ///recently played function
 
 function recentlyPlayed() {
+    console.log('clicked')
     let recent = [];
 
     let audioElements = document.querySelectorAll('.audio');
@@ -112,13 +121,6 @@ function recentlyPlayed() {
 }
 
 
-/////browse all function
-
-function browseAll() {
-  
-}
-
-
 ////playlists function
 
 function playLists() {
@@ -131,10 +133,9 @@ function playLists() {
 //////favorites
 
 function favoRites() {
-  let favorite = document.querySelector("i :has(.bx-heart)");
-  if(favorite){
-    console.log("favorited")
-  }
+favorited.forEach(favorite=>{
+    createSongCard()
+})
     
 }
 
@@ -199,9 +200,9 @@ function shuffle() {
     // Implement logic to reflect shuffled songs in the UI if needed
 }
 
-// Function to toggle favorite status of the current song
+// favorite toggle function
 
-function favorite(e) {
+function favoriteToggle(e) {
     let currentSong = songs[currentSongIndex];
     currentSong.isFavorite = !currentSong.isFavorite;
     if (currentSong.isFavorite) {
@@ -211,14 +212,14 @@ function favorite(e) {
     } else {
         console.log("Song is no longer favorite.");
         e.target.classList.remove('isFavorite');
-        // Remove the current song from the favorited array
+
         favorited = favorited.filter(song => song !== currentSong);
     }
 }
 
 
-// Function to toggle repeat mode
-let isRepeatOn = false; // Flag to indicate if repeat mode is on
+// repeat function
+let isRepeatOn = false; 
 
 function repeat(e) {
     isRepeatOn = !isRepeatOn;
@@ -235,7 +236,7 @@ function repeat(e) {
       
     } else {
         console.log("Repeat mode is off.");
-        // Implement logic to reflect repeat mode in the UI if needed
+     
         e.target.style.color = "black"
     }
 }
@@ -278,14 +279,14 @@ document.addEventListener('click', function(event) {
         repeat()
     }
     if (event.target.classList.contains('bx-heart')) {
-       favorite()
+        favoriteToggle()
     }
 });
 
 artists.addEventListener('click', () => {
     let content = document.querySelector('.content');
     content.innerHTML = '';
-
+    console.log('clicked')
     let artistCounts = songs.reduce((counts, song) => {
         counts[song.artistName] = (counts[song.artistName] || 0) + 1;
         return counts;
@@ -304,11 +305,14 @@ artists.addEventListener('click', () => {
     });
 });
 
-recently.addEventListener('click', recentlyPlayed)
-browse.addEventListener('click', browseAll)
 
-let searchInput = document.getElementById('search-fun');
-let input = document.getElementById('search-input');
+recently.addEventListener('click', recentlyPlayed)
+playlists.addEventListener('click', ()=>{
+    console.log('clicked')
+})
+
+/////////search functionality
+
 searchInput.addEventListener('click', function() {
     let query = input.value.toLowerCase().trim();
 
@@ -378,15 +382,17 @@ searchInput.addEventListener('click', function() {
     console.log('logged');
 });
 
-///////////////
+///////////////////////////////////////MOBILE/////////////////////////////////////////////////
+
 let mobileNav = document.querySelector('.mobile-nav')
 let hamburger = document.querySelector('.bx-menu-alt-right')
 let mobileMenu = document.querySelector('.menu-mobile')
 let searchbtn = document.querySelector('.bx-search')
 let mobileInput = document.querySelector('.mobile-search')
+let allMenu = document.querySelector('.all-menu')
 
 window.addEventListener('scroll', ()=>{
-    if(scrollY > 20){
+    if(scrollY > 10){
         mobileNav.style.backgroundColor = "white"
     }else{
         mobileNav.style.backgroundColor = "rgba(255, 255, 255, 0.5)"
@@ -395,6 +401,7 @@ window.addEventListener('scroll', ()=>{
 
 hamburger.addEventListener('click', ()=>{
     console.log('clicked')
+    mobileMenu.appendChild(allMenu)
   mobileMenu.classList.toggle('active')
 })
 searchbtn.addEventListener('click', ()=>{
