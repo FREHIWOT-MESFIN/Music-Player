@@ -221,10 +221,16 @@ a{
     .mobile-search{
         position: absolute;
         top: -100%;
+        left: 0;
+        width: 250px;
+        border: none;
+        outline: none;
+        line-height: 1.4;
+        padding: 5px 10px;
     }
     .mobile-search.active{
         top: 50px;
-        width: 100%;
+        width: 90%;
     }
     .menu-mobile{
         position: fixed;
