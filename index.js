@@ -314,11 +314,12 @@ playlists.addEventListener('click', ()=>{
 /////////search functionality
 
 searchInput.addEventListener('click', function() {
+    
     let query = input.value.toLowerCase().trim();
 
     let neighbour = document.querySelector('.playing-state')
     if(neighbour){
-        neighbour.innerHTML = '';
+        neighbour.style.display = 'none';
     }
     
     let searchResultsContainer = document.querySelector('.all-songs')
@@ -378,8 +379,7 @@ searchInput.addEventListener('click', function() {
         audio.addEventListener('ended', nextSong)
 
     });
-    
-    console.log('logged');
+    input.value = ''
 });
 
 ///////////////////////////////////////MOBILE/////////////////////////////////////////////////
