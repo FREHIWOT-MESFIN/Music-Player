@@ -25,14 +25,18 @@ songCards.forEach(songCard => {
     let songName = songCard.querySelector(".song-name").textContent;
     let artistName = songCard.querySelector(".artist-name").textContent;
 
-    songCard.addEventListener("mouseover", () => {
+    songCard.addEventListener("mouseenter", () => {
         songInfoi.style.display = "block";
     });
 
-    songCard.addEventListener("mouseout", () => {
-        songInfoi.style.display = "none";
+   songCard.addEventListener("mouseleave", () => {
+        if (!songCard.classList.contains("isPlaying")) {
+            songInfoi.style.display = "none";
+        }
     });
-
+    if (!songCard.classList.contains("isPlaying")) {
+        songInfoi.style.display = "none";
+    }
     songInfoi.addEventListener("click", () => {
         if (songInfoi.classList.contains("bx-play")) {
             play(audio, songInfoi, songCard, controls);
@@ -40,6 +44,7 @@ songCards.forEach(songCard => {
             playingState(audio, songName, artistName)
             songCard.classList.add("isPlaying")
             controls.style.visibility = "visible";
+            controls.children[1].style.visibility = "visible";
         } else {
             pause(audio, songInfoi);
             songInfoi.style.display = "block";
@@ -68,6 +73,7 @@ function play(audio, songInfoi, songCard, controls) {
                 }
                 a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.classList.add("bx-play")
                 a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.classList.remove(".bx-pause");
+                a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.style.display = 'none'
             }
         });
         audio.play();
@@ -214,14 +220,23 @@ function favorite(e) {
 // Function to toggle repeat mode
 let isRepeatOn = false; // Flag to indicate if repeat mode is on
 
-function repeat() {
+function repeat(e) {
     isRepeatOn = !isRepeatOn;
     if (isRepeatOn) {
         console.log("Repeat mode is on.");
-        // Implement logic to reflect repeat mode in the UI if needed
+        let allAudios = document.querySelectorAll("audio");
+        for (let i = 0; i < allAudios.length; i++) {
+            let audio = allAudios[i];
+            if (audio.currentTime > 0) {
+                audio.addEventListener('ended', ()=>{audio.play()})
+                e.target.style.color = "orange"
+            }
+        }
+      
     } else {
         console.log("Repeat mode is off.");
         // Implement logic to reflect repeat mode in the UI if needed
+        e.target.style.color = "black"
     }
 }
 
@@ -292,32 +307,85 @@ artists.addEventListener('click', () => {
 recently.addEventListener('click', recentlyPlayed)
 browse.addEventListener('click', browseAll)
 
-
-// Assuming you have a search input field with id "search-input"
 let searchInput = document.getElementById('search-fun');
 let input = document.getElementById('search-input');
-// Attach an event listener to the input field
 searchInput.addEventListener('click', function() {
-    // Get the search query entered by the user
     let query = input.value.toLowerCase().trim();
 
-    // Get the container where search results will be displayed
-    let searchResultsContainer = document.querySelector('.content')
-    // Clear previous search results
+    let neighbour = document.querySelector('.playing-state')
+    if(neighbour){
+        neighbour.innerHTML = '';
+    }
+    
+    let searchResultsContainer = document.querySelector('.all-songs')
     searchResultsContainer.innerHTML = '';
 
-    // Filter songs based on the search query
     let matchingSongs = songs.filter(song => {
-        // Customize this condition based on your search requirements
         return (
             song.songName.toLowerCase().includes(query) ||
             song.artistName.toLowerCase().includes(query)
         );
     });
 
-    // Display search results
-    matchingSongs.forEach(song => {
-        let songCard = createSongCard(song.id, song.songName, song.artistName);
-        searchResultsContainer.appendChild(songCard);
+    if (matchingSongs.length === 0 || query == "") {
+        let noResultsMessage = document.createElement('div');
+        noResultsMessage.textContent = 'No matching songs found.';
+        searchResultsContainer.appendChild(noResultsMessage);
+    } else {
+        matchingSongs.forEach(song => {
+            createSongCard(song.id, song.songName, song.artistName);
+        });
+    }
+
+    let songCards = document.querySelectorAll(".song-card");
+    songCards.forEach(songCard => {
+        let songInfoi = songCard.querySelector(".song-info1 > span i");
+        let controls = songCard.querySelector(".controls");
+        let audio = songCard.querySelector(".song");
+        let songName = songCard.querySelector(".song-name").textContent;
+        let artistName = songCard.querySelector(".artist-name").textContent;
+    
+        songCard.addEventListener("mouseenter", () => {
+            songInfoi.style.display = "block";
+        });
+    
+       songCard.addEventListener("mouseleave", () => {
+            if (!songCard.classList.contains("isPlaying")) {
+                songInfoi.style.display = "none";
+            }
+        });
+        
+    
+        songInfoi.addEventListener("click", () => {
+            if (songInfoi.classList.contains("bx-play")) {
+                play(audio, songInfoi, songCard, controls);
+                songInfoi.style.display = "block";
+                playingState(audio, songName, artistName)
+                songCard.classList.add("isPlaying")
+                controls.style.visibility = "visible";
+            } else {
+                pause(audio, songInfoi);
+                songInfoi.style.display = "block";
+                controls.children[1].style.visibility = "hidden";
+            }
+        });
+        
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', nextSong)
+
     });
+    
+    console.log('logged');
 });
+
+///////////////
+let mobileNav = document.querySelector('.mobile-nav')
+let hamburger = document.querySelector('.bx-menu-alt-right')
+
+window.addEventListener('scroll', ()=>{
+    if(scrollY > 20){
+        mobileNav.style.backgroundColor = "white"
+    }else{
+        mobileNav.style.backgroundColor = "rgba(255, 255, 255, 0.5)"
+    }
+})
