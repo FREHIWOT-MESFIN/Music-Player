@@ -393,7 +393,12 @@ window.addEventListener('scroll', ()=>{
 
 hamburger.addEventListener('click', ()=>{
     console.log('clicked')
-    mobileMenu.appendChild(allMenu)
+    if(mobileMenu.parentElement.style.display == 'block'){
+        mobileMenu.appendChild(allMenu)
+    }else{
+        mobileMenu.parentElement.nextElementSibling.appendChild(allMenu)
+    }
+   
   mobileMenu.classList.toggle('active')
 })
 searchbtn.addEventListener('click', ()=>{
