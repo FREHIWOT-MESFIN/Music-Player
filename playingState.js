@@ -78,6 +78,9 @@ function playingState(audio, songName, artistName){
               iv.innerHTML = "<i class='bx bxs-volume-full'></i>";
               let vprogress = document.createElement("div");
               vprogress.classList.add("vprogress");
+              let vprogressin = document.createElement("div");
+              vprogressin.classList.add("progress-inside");
+              vprogress.appendChild(vprogressin)
             volume.appendChild(iv);
             volume.appendChild(vprogress);
         playingBot.appendChild(songDetailss);

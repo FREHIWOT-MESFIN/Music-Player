@@ -105,6 +105,7 @@ a{
     justify-content: center;
     align-items: center;
     width: 800px;
+    z-index: 9999;
 }
 .song-playing{
     position: fixed;
@@ -156,6 +157,17 @@ a{
     height: 4px;
     width: 0%;
 }
+.volume{
+    display: flex;
+    align-items: center;
+}
+.vprogress{
+    margin-left: 5px;
+    width: 100px;
+    height: 4px;
+    border-radius: 8px;
+    background-color: rgba(128,128,128,0.7);
+}
 .isPlaying{
     background: rgba(255, 255, 255, 0.2);
 }
@@ -164,6 +176,7 @@ a{
     color: hsl(0, 100%, 65%);
 }
 .all-songs{
+    position: relative;
     font-family: "Poppins", sans-serif;
     height: 400px;
     width: 100%;
@@ -224,6 +237,7 @@ a{
         display: flex;
         justify-content: space-between;
         align-items: center;
+        z-index: 99999999;
     }
     .mobile-search{
         position: absolute;
@@ -246,9 +260,11 @@ a{
         width: 100%;
         background: red;
         z-index: 9999999999;
+        transition: 0.3s ease-in;
     }
     .menu-mobile.active{
       right: 0;
+      transition: right 0.3s ease-out;
     }
     .home-section{
         top: 50px;
