@@ -396,9 +396,8 @@ window.addEventListener('scroll', ()=>{
 hamburger.addEventListener('click', () => {
     console.log('clicked');
     mobileMenu.classList.toggle('active');
-    // Toggle display of allMenu only when mobile menu is active
     if (mobileMenu.classList.contains('active')) {
-        mobileMenu.appendChild(allMenu); // Append allMenu when mobile menu is active
+        mobileMenu.appendChild(allMenu); 
         hamburger.classList.remove('bx-menu-alt-right')
         hamburger.classList.add('bx-x')
     }else{
@@ -408,8 +407,19 @@ hamburger.addEventListener('click', () => {
     }
 });
 
+let miniNav = document.querySelector('.mini-nav');
+let miniSearch = document.querySelector('.mini-search');
 
 searchbtn.addEventListener('click', ()=>{
     console.log('clicked')
-  mobileInput.classList.toggle('active')
+    mobileInput.classList.toggle('active')
+
+    if (mobileInput.classList.contains('active')) {
+        mobileInput.appendChild(miniSearch); 
+    }else{
+        let greeting = document.querySelector('.greeting')
+
+        miniNav.insertBefore(miniSearch, greeting)
+    }
+
 })
