@@ -382,6 +382,7 @@ let mobileMenu = document.querySelector('.menu-mobile')
 let searchbtn = document.querySelector('.bx-search')
 let mobileInput = document.querySelector('.mobile-search')
 let allMenu = document.querySelector('.all-menu')
+let desktopMenu = document.querySelector('.desktop-nav')
 
 window.addEventListener('scroll', ()=>{
     if(scrollY > 10){
@@ -391,16 +392,19 @@ window.addEventListener('scroll', ()=>{
     }
 })
 
-hamburger.addEventListener('click', ()=>{
-    console.log('clicked')
-    if(mobileMenu.parentElement.style.display == 'block'){
-        mobileMenu.appendChild(allMenu)
+
+hamburger.addEventListener('click', () => {
+    console.log('clicked');
+    mobileMenu.classList.toggle('active');
+    // Toggle display of allMenu only when mobile menu is active
+    if (mobileMenu.classList.contains('active')) {
+        mobileMenu.appendChild(allMenu); // Append allMenu when mobile menu is active
     }else{
-        mobileMenu.parentElement.nextElementSibling.appendChild(allMenu)
+    desktopMenu.appendChild(allMenu)
     }
-   
-  mobileMenu.classList.toggle('active')
-})
+});
+
+
 searchbtn.addEventListener('click', ()=>{
     console.log('clicked')
   mobileInput.classList.toggle('active')
