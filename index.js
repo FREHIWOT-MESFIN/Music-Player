@@ -399,8 +399,12 @@ hamburger.addEventListener('click', () => {
     // Toggle display of allMenu only when mobile menu is active
     if (mobileMenu.classList.contains('active')) {
         mobileMenu.appendChild(allMenu); // Append allMenu when mobile menu is active
+        hamburger.classList.remove('bx-menu-alt-right')
+        hamburger.classList.add('bx-x')
     }else{
     desktopMenu.appendChild(allMenu)
+    hamburger.classList.remove('bx-x')
+    hamburger.classList.add('bx-menu-alt-right')
     }
 });
 
