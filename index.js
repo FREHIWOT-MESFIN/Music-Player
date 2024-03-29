@@ -272,6 +272,11 @@ document.addEventListener('click', function(event) {
         favoriteToggle()
         
     }
+    if (event.target.classList.contains('bxs-volume-full')) {
+        let vprogress=document.querySelector('.vprogress');
+        vprogress.classList.toggle('active')
+        
+    }
 });
 
 artists.addEventListener('click', () => {
@@ -407,6 +412,14 @@ hamburger.addEventListener('click', () => {
     }
 });
 
+let navLinks = document.querySelectorAll('.all-menu p, .all-menu a, .all-menu li');
+
+navLinks.forEach(nav=> nav.addEventListener('click', ()=>{
+    mobileMenu.classList.remove('active');
+    hamburger.classList.remove('bx-x')
+    hamburger.classList.add('bx-menu-alt-right') 
+}))
+
 let miniNav = document.querySelector('.mini-nav');
 let miniSearch = document.querySelector('.mini-search');
 
@@ -423,3 +436,5 @@ searchbtn.addEventListener('click', ()=>{
     }
 
 })
+
+

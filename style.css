@@ -256,6 +256,7 @@ a{
         display: flex;
         justify-content: center;
         align-items: center;
+        padding-top: 20px;
         background: hsl(0, 100%, 80%);
         z-index: 9999999999;
         transition: 0.3s ease-in;
@@ -284,5 +285,15 @@ a{
         width: 150px;
         height: 150px;
     }
-  }
-  
+    .volume{
+
+    }
+    .vprogress{
+        width: 4px;
+        height: 50px;
+        display: none; 
+    }
+    .vprogress.active{
+        display: block;
+    }
+}
