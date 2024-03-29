@@ -425,14 +425,20 @@ let miniSearch = document.querySelector('.mini-search');
 
 searchbtn.addEventListener('click', ()=>{
     console.log('clicked')
-    mobileInput.classList.toggle('active')
+    console.log(mobileInput)
+    if(mobileNav){
+        mobileInput.classList.toggle('active')
+    }else{
+        mobileInput.classList.remove('active')
+    }
+   
 
     if (mobileInput.classList.contains('active')) {
         mobileInput.appendChild(miniSearch); 
     }else{
-        let greeting = document.querySelector('.greeting')
+            let greeting = document.querySelector('.greeting')
 
-        miniNav.insertBefore(miniSearch, greeting)
+            miniNav.insertBefore(miniSearch, greeting)
     }
 
 })

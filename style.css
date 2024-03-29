@@ -247,6 +247,24 @@ a{
     .mobile-search.active{
         top: 50px;
         width: 100%;
+        height: 100px;
+        padding: 5px;
+        z-index: 99999999;
+    }
+    .mobile-search .mini-search{
+        display: block;
+        background: white;
+        width: 300px;
+        padding: 5px;
+        border-radius: 8px;
+    }
+    .mini-search input{
+        width: 250px;
+        border: none;
+        outline: none;
+        line-height: 1.4;
+        padding: 5px 10px;
+       
     }
     .menu-mobile{
         position: fixed;
@@ -269,7 +287,7 @@ a{
         top: 50px;
         margin: 1rem;
     }
-    .mini-search{
+    .mini-nav .mini-search{
         display: none;
     }
     .content{
@@ -284,9 +302,6 @@ a{
     .playing-state .song-playing img{
         width: 150px;
         height: 150px;
-    }
-    .volume{
-
     }
     .vprogress{
         width: 4px;
