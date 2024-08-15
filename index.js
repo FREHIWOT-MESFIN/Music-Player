@@ -10,6 +10,7 @@ let playlists = document.querySelector('#playlists');
 let artists = document.querySelector('#artists');
 let favorites = document.querySelector('#favorites');
 let searchInput = document.getElementById('search-fun');
+let searchInputInput = document.getElementById('search-input');
 let input = document.getElementById('search-input');
 
 let favorited = [];
@@ -20,6 +21,7 @@ songs.forEach(song => {
     createSongCard(song.id, song.songName, song.artistName);
 });
 
+function initializeSongCardEvents() {
 let songCards = document.querySelectorAll(".song-card");
 songCards.forEach(songCard => {
     let songInfoi = songCard.querySelector(".song-info1 > span i");
@@ -61,7 +63,7 @@ songCards.forEach(songCard => {
         controls.children[1].style.visibility = "hidden";
     })
 });
-
+}
 /////play function
 
 function play(audio, songInfoi, songCard, controls) {
@@ -98,26 +100,64 @@ function pause(audio, songInfoi) {
 }
 
 ///recently played function
+// Global array to keep track of played audios
+const playedAudios = [];
 
-function recentlyPlayed() {
-    console.log('clicked')
-    let recent = [];
+// Function to mark audio as played
+function markAudioAsPlayed(audio) {
+    const audioId = audio.src.split('/').pop().replace('.mp3', '');
+    if (!playedAudios.includes(audioId)) {
+        playedAudios.push(audioId);
+    }
+}
 
-    let audioElements = document.querySelectorAll('.audio');
-    
+// Function to set up event listeners for all audio elements
+function setupAudioListeners() {
+    let audioElements = document.querySelectorAll('audio');
     audioElements.forEach(audio => {
-        if (audio.currentTime > 0) {
-            recent.push(audio);
-        }
-    });
-    
-    let div = document.querySelector('.content');
-    div.innerHTML = '';
-    
-    recent.forEach(song => {
-        div.appendChild(createSongCard(song));
+        audio.addEventListener('play', () => markAudioAsPlayed(audio));
+        audio.addEventListener('seeking', ()=>console.log('seeking'))
     });
 }
+
+// Function to display recently played audios
+function recentlyPlayed() {
+ 
+    
+    // Select the div and clear its content once
+    let div = document.querySelector('.all-songs');
+    if (!div) {
+        console.error('.all-songs div not found');
+        return;
+    }
+    div.innerHTML = '';
+
+    // Append song cards for each recently played audio
+    if(playedAudios && playedAudios.length != 0){
+    playedAudios.forEach(audioId => {
+        let song = songs.find(song => song.id === audioId);
+        if (song) {
+            let { songName, artistName } = song;
+    
+            // Create and append song card
+            let songCard = createSongCard(audioId, songName, artistName);
+            div.appendChild(songCard);
+        } else {
+            console.warn('Song not found for ID:', audioId);
+        }
+        initializeSongCardEvents();
+    });
+}else{
+    div.innerHTML = 'No played audio';
+}
+
+}
+
+// Initialize audio listeners when the page loads
+window.addEventListener('DOMContentLoaded', () => {
+    setupAudioListeners();
+    initializeSongCardEvents();
+});
 
 
 ////playlists function
@@ -309,7 +349,16 @@ playlists.addEventListener('click', ()=>{
 
 /////////search functionality
 
-searchInput.addEventListener('click', function() {
+searchInput.addEventListener('click', searchOnEnter);
+
+
+searchInputInput.addEventListener('keyup', event => {
+    if (event.key === 'Enter') {
+        searchOnEnter(); 
+    }
+});
+
+function searchOnEnter() {
     
     let query = input.value.toLowerCase().trim();
 
@@ -377,8 +426,7 @@ searchInput.addEventListener('click', function() {
 
     });
     input.value = ''
-});
-
+}
 ///////////////////////////////////////MOBILE/////////////////////////////////////////////////
 
 let mobileNav = document.querySelector('.mobile-nav')

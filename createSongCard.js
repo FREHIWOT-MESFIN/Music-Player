@@ -51,5 +51,6 @@ function createSongCard(id, songName, artistName) {
     songCard.appendChild(controls);
     songCard.appendChild(duration);
     allSongs.appendChild(songCard);
+    return songCard
 }
 export { createSongCard };

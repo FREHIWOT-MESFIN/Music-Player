@@ -30,7 +30,7 @@ a{
     max-width: 16%;
     height: 100%;
     padding: 30px;
-    z-index: 99;
+   
 }
 .desktop-nav i:not(.logo){
     color: hsl(0, 100%, 65%);
@@ -109,7 +109,7 @@ a{
 }
 .song-playing{
     position: fixed;
-  
+    z-index: 9999;
 }
 .song-playing img{
     height: 300px;
