@@ -1,4 +1,5 @@
 let allSongs = document.querySelector(".all-songs");
+allSongs.style.display = "block";
 
 
 function createSongCard(id, songName, artistName) {

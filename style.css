@@ -100,6 +100,13 @@ a{
 .content{
     display: flex;
 }
+.recently-played,
+.playlists,
+.artists,
+.favorites,
+.all-songs{
+    display: none;
+}
 .playing-state{
     display: flex;
     justify-content: center;
@@ -109,7 +116,7 @@ a{
 }
 .song-playing{
     position: fixed;
-    z-index: 9999;
+    z-index: 99;
 }
 .song-playing img{
     height: 300px;
@@ -129,7 +136,7 @@ a{
     padding: 0.6rem;
     border-radius: 20px;
     background: white;
-    z-index: 999;
+    z-index: 99;
 }
 .playing-bot img{
     width: 50px;
@@ -218,6 +225,18 @@ a{
     background-color: transparent;
     min-width: 50px;
     height: 50px;
+}
+.playlist-container{
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+}
+.playlist-card img{
+    display: inline-block;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
 }
 /*//////////MEDIA QUERIES///////////////*/
 

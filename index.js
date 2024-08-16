@@ -16,54 +16,75 @@ let input = document.getElementById('search-input');
 let favorited = [];
 
 //////////////render songs
+function populateSongCards() {
+    // Create song cards for all songs
+    songs.forEach(song => {
+        createSongCard(song.id, song.songName, song.artistName);
+    });
+}
 
-songs.forEach(song => {
-    createSongCard(song.id, song.songName, song.artistName);
-});
+let currentlyPlayingAudio = null;
 
 function initializeSongCardEvents() {
-let songCards = document.querySelectorAll(".song-card");
-songCards.forEach(songCard => {
-    let songInfoi = songCard.querySelector(".song-info1 > span i");
-    let controls = songCard.querySelector(".controls");
-    let audio = songCard.querySelector(".song");
-    let songName = songCard.querySelector(".song-name").textContent;
-    let artistName = songCard.querySelector(".artist-name").textContent;
+    let songCards = document.querySelectorAll(".song-card");
+    songCards.forEach(songCard => {
+        let songInfoi = songCard.querySelector(".song-info1 > span i");
+        let controls = songCard.querySelector(".controls");
+        let audio = songCard.querySelector(".song");
+        let songName = songCard.querySelector(".song-name").textContent;
+        let artistName = songCard.querySelector(".artist-name").textContent;
 
-    songCard.addEventListener("mouseenter", () => {
-        songInfoi.style.display = "block";
-    });
+        songCard.addEventListener("mouseenter", () => {
+            songInfoi.style.display = "block";
+        });
 
-   songCard.addEventListener("mouseleave", () => {
+        songCard.addEventListener("mouseleave", () => {
+            if (!songCard.classList.contains("isPlaying")) {
+                songInfoi.style.display = "none";
+            }
+        });
+
         if (!songCard.classList.contains("isPlaying")) {
             songInfoi.style.display = "none";
         }
-    });
-    if (!songCard.classList.contains("isPlaying")) {
-        songInfoi.style.display = "none";
-    }
-   
-    songInfoi.addEventListener("click", () => {
-        if (songInfoi.classList.contains("bx-play")) {
-            play(audio, songInfoi, songCard, controls);
-            songInfoi.style.display = "block";
-            playingState(audio, songName, artistName);
-            songCard.classList.add("isPlaying");
-            controls.style.visibility = "visible";
-        }else {
-            pause(audio, songInfoi);
-            songInfoi.style.display = "block";
+
+        songInfoi.addEventListener("click", () => {
+            if (songInfoi.classList.contains("bx-play")) {
+                // Check if another song is currently playing
+                if (currentlyPlayingAudio && currentlyPlayingAudio !== audio) {
+                    pause(currentlyPlayingAudio, currentlyPlayingAudio.parentElement.querySelector(".song-info1 > span i"));
+                }
+
+                play(audio, songInfoi, songCard, controls);
+                songInfoi.style.display = "block";
+                // Update playback state only if it changes
+                if (currentlyPlayingAudio !== audio) {
+                    playingState(audio, songName, artistName);
+                    currentlyPlayingAudio = audio; // Set the currently playing audio
+                }
+                songCard.classList.add("isPlaying");
+                controls.style.visibility = "visible";
+            } else {
+                pause(audio, songInfoi);
+                songInfoi.style.display = "block";
+                controls.children[1].style.visibility = "hidden";
+                if (currentlyPlayingAudio === audio) {
+                    currentlyPlayingAudio = null; // Reset currently playing audio
+                }
+            }
+        });
+
+        audio.addEventListener('timeupdate', updateProgress);
+        audio.addEventListener('ended', nextSong);
+        audio.addEventListener('ended', () => {
             controls.children[1].style.visibility = "hidden";
-        }
+            if (currentlyPlayingAudio === audio) {
+                currentlyPlayingAudio = null; // Reset currently playing audio
+            }
+        });
     });
-    
-    audio.addEventListener('timeupdate', updateProgress);
-    audio.addEventListener('ended', nextSong)
-    audio.addEventListener('ended', ()=>{
-        controls.children[1].style.visibility = "hidden";
-    })
-});
 }
+
 /////play function
 
 function play(audio, songInfoi, songCard, controls) {
@@ -84,10 +105,14 @@ function play(audio, songInfoi, songCard, controls) {
                 a.previousElementSibling.previousElementSibling.previousElementSibling.firstChild.style.display = 'none'
             }
         });
-        audio.play();
-        songInfoi.classList.remove("bx-play");
-        songInfoi.classList.add("bx-pause");
-        controls.children[1].style.visibility = "visible";
+        audio.play().then(() => {
+            songInfoi.classList.remove("bx-play");
+            songInfoi.classList.add("bx-pause");
+            controls.children[1].style.visibility = "visible";
+        }).catch(error => {
+            console.error('Error playing audio:', error);
+        });
+    
     }
 }
 
@@ -99,11 +124,12 @@ function pause(audio, songInfoi) {
     songInfoi.classList.add("bx-play");
 }
 
-///recently played function
-// Global array to keep track of played audios
+///////////recently played ///////////////
+
+
+
 const playedAudios = [];
 
-// Function to mark audio as played
 function markAudioAsPlayed(audio) {
     const audioId = audio.src.split('/').pop().replace('.mp3', '');
     if (!playedAudios.includes(audioId)) {
@@ -111,7 +137,6 @@ function markAudioAsPlayed(audio) {
     }
 }
 
-// Function to set up event listeners for all audio elements
 function setupAudioListeners() {
     let audioElements = document.querySelectorAll('audio');
     audioElements.forEach(audio => {
@@ -120,18 +145,27 @@ function setupAudioListeners() {
     });
 }
 
-// Function to display recently played audios
 function recentlyPlayed() {
- 
     
-    // Select the div and clear its content once
-    let div = document.querySelector('.all-songs');
-    if (!div) {
-        console.error('.all-songs div not found');
+    let content = document.querySelector('.content');
+    if (!content) {
+        console.error('.content element not found');
         return;
     }
-    div.innerHTML = '';
-
+    
+    let allSongs = content.querySelector('.all-songs');
+    if (!allSongs) {
+        console.error('.all-songs element not found within .content');
+        return;
+    }
+    
+    // Display only the .all-songs element
+    allSongs.style.display = 'block';
+    
+    // Optionally clear other content if needed
+    content.querySelectorAll(':not(.all-songs)').forEach(el => el.remove());
+    
+    console.log('clicked')
     // Append song cards for each recently played audio
     if(playedAudios && playedAudios.length != 0){
     playedAudios.forEach(audioId => {
@@ -148,17 +182,19 @@ function recentlyPlayed() {
         initializeSongCardEvents();
     });
 }else{
-    div.innerHTML = 'No played audio';
+    content.innerHTML = 'No played audio';
+}
 }
 
-}
+// Initialize page
+function initializePage() {
+    populateSongCards(); 
 
-// Initialize audio listeners when the page loads
-window.addEventListener('DOMContentLoaded', () => {
     setupAudioListeners();
     initializeSongCardEvents();
-});
+}
 
+window.addEventListener('DOMContentLoaded', initializePage);
 
 ////playlists function
 
@@ -179,13 +215,36 @@ favorited.forEach(favorite=>{
 }
 
 ////new playlist
-
-function newPlaylist() {
-    songs.forEach(song => {
-        createSongCard(song.name, song.artistName);
-    });
+function createPlaylist(name, containerSelector) {
+    let playlist = document.createElement('div');
+    playlist.classList.add('playlist-card');
+  
+    let img = document.createElement('img');
+    img.src = "./images/discImage.jpg";
+    playlist.appendChild(img);
     
+    let playlistName = document.createElement('p');
+    playlistName.textContent = name;
+    playlist.appendChild(playlistName);
+    
+    let container = document.querySelector(containerSelector);
+    if (!container) {
+        console.error(`Container ${containerSelector} not found.`);
+        return null;
+    }
+  
+    container.style.display = "grid";
+    
+    container.classList.add('playlist-container');
+
+    container.innerHTML = ''; 
+    
+    container.appendChild(playlist);
+    
+    return playlist;
 }
+
+
 
 //////prev song
 
@@ -216,14 +275,25 @@ function nextSong(e) {
         let allAudios = document.querySelectorAll("audio");
         for (let i = 0; i < allAudios.length; i++) {
             let audio = allAudios[i];
-            if (audio.currentTime > 0) {
-                return audio.parentElement.parentElement;
+            console.log('Checking audio:', audio);
+            if (!audio.paused && audio.currentTime > 0) {
+                // Check if the parent structure matches the expected pattern
+                if (audio.parentElement && audio.parentElement.parentElement) {
+                    console.log('Found playing parent div:', audio.parentElement.parentElement);
+                    console.log('Audio paused:', audio.paused);
+                    console.log('Audio current time:', audio.currentTime);
+                    audio.addEventListener('loadeddata', () => console.log('Audio loaded'));
+                    audio.addEventListener('play', () => console.log('Audio playing'));
+                    audio.addEventListener('error', (e) => console.error('Audio error:', e));
+                    return audio.parentElement.parentElement;
+                }
             }
         }
         return null;
     }
     
     let playingParentDiv = findPlayingParentDiv();
+    console.log(playingParentDiv)
 
     if (playingParentDiv && playingParentDiv.nextElementSibling && playingParentDiv.nextElementSibling.querySelector(".song-info1 > span i")) {
         playingParentDiv.nextElementSibling.querySelector(".song-info1 > span i").click();
@@ -319,10 +389,11 @@ document.addEventListener('click', function(event) {
     }
 });
 
-artists.addEventListener('click', () => {
+artists.addEventListener('click', (element) => {
     let content = document.querySelector('.content');
-    content.innerHTML = '';
-    console.log('clicked')
+    let allSongs = document.querySelector('.all-songs');
+    allSongs.style.display = 'none';
+
     let artistCounts = songs.reduce((counts, song) => {
         counts[song.artistName] = (counts[song.artistName] || 0) + 1;
         return counts;
@@ -334,9 +405,10 @@ artists.addEventListener('click', () => {
 
     duplicateArtists.forEach(artistName => {
         let filteredSongs = songs.filter(song => song.artistName === artistName);
-        
+       
         filteredSongs.forEach(song => {
-            createSongCard(song.songName, song.artistName);
+            let playlist = createPlaylist(song.artistName, ".artists");
+            content.appendChild(playlist)
         });
     });
 });
