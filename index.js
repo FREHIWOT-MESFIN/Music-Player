@@ -5,15 +5,13 @@ import { playingState } from './playingState.js';
 
 
 let recently = document.querySelector('#recently-p');
-let browse = document.querySelector('#b-all');
-let playlists = document.querySelector('#playlists');
+let playlistsNav = document.querySelector('#playlists');
 let artists = document.querySelector('#artists');
 let favorites = document.querySelector('#favorites');
 let searchInput = document.getElementById('search-fun');
 let searchInputInput = document.getElementById('search-input');
 let input = document.getElementById('search-input');
 
-let favorited = [];
 
 //////////////render songs
 function populateSongCards() {
@@ -163,7 +161,7 @@ function recentlyPlayed() {
     allSongs.style.display = 'block';
     
     // Optionally clear other content if needed
-    content.querySelectorAll(':not(.all-songs)').forEach(el => el.remove());
+    content.querySelectorAll(':not(.all-songs)').forEach(el => el.style.display="none");
     
     console.log('clicked')
     // Append song cards for each recently played audio
@@ -175,14 +173,14 @@ function recentlyPlayed() {
     
             // Create and append song card
             let songCard = createSongCard(audioId, songName, artistName);
-            div.appendChild(songCard);
+            allSongs.appendChild(songCard);
         } else {
             console.warn('Song not found for ID:', audioId);
         }
         initializeSongCardEvents();
     });
 }else{
-    content.innerHTML = 'No played audio';
+    allSongs.innerHTML = 'No played audio';
 }
 }
 
@@ -196,25 +194,83 @@ function initializePage() {
 
 window.addEventListener('DOMContentLoaded', initializePage);
 
-////playlists function
 
-function playLists() {
-    songs.forEach(song => {
-        createSongCard(song.id, song.songName, song.artistName);
-    });
-    
-}
+//////============favorites===========================////////////
 
-//////favorites
+let favorited = [];
 
 function favoRites() {
-favorited.forEach(favorite=>{
-    createSongCard()
-})
+        
+    let content = document.querySelector('.content');
+    if (!content) {
+        console.error('.content element not found');
+        return;
+    }
+    
+    let favorites = content.querySelector('.favorites');
+    if (!favorites) {
+        console.error('.favorites element not found within .content');
+        return;
+    }
+    
+    // Display only the .all-songs element
+    favorites.style.display = 'block';
+    
+    // Optionally clear other content if needed
+    content.querySelectorAll(':not(.favorites)').forEach(el => el.style.display="none");
+    
+    console.log('clicked')
+    if(favorited && favorited.length != 0){
+        favorited.forEach(audioId => {
+            let song = songs.find(song => song.id === audioId);
+            if (song) {
+                let { songName, artistName } = song;
+        
+                // Create and append song card
+                let songCard = createSongCard(audioId, songName, artistName);
+                allSongs.appendChild(songCard);
+            } else {
+                console.warn('Song not found for ID:', audioId);
+            }
+            initializeSongCardEvents();
+        });
+    }else{
+        favorites.innerHTML = 'No favorited song';
+    }
     
 }
 
+favorites.addEventListener('click', favoRites);
+
+
+// favorite toggle function
+
+function favoriteToggle(event) {
+    let allAudios = document.querySelectorAll("audio");
+    for (let i = 0; i < allAudios.length; i++) {
+        let audio = allAudios[i];
+        if (audio.currentTime > 0) {
+            let currentSong = audio;
+            currentSong.isFavorite = !currentSong.isFavorite;
+            if (currentSong.isFavorite) {
+                console.log("Song is now favorite.");
+                event.target.classList.add('isFavorite');
+                favorited.push(currentSong);
+            } else {
+                console.log("Song is no longer favorite.");
+                event.target.classList.remove('isFavorite');
+        
+                favorited = favorited.filter(song => song !== currentSong);
+            }
+        }
+    }
+    console.log(favorited)
+}
+
+
+
 ////new playlist
+
 function createPlaylist(name, containerSelector) {
     let playlist = document.createElement('div');
     playlist.classList.add('playlist-card');
@@ -303,30 +359,6 @@ function nextSong(e) {
 }
 
 
-// favorite toggle function
-
-function favoriteToggle(event) {
-    let allAudios = document.querySelectorAll("audio");
-    for (let i = 0; i < allAudios.length; i++) {
-        let audio = allAudios[i];
-        if (audio.currentTime > 0) {
-            let currentSong = audio;
-            currentSong.isFavorite = !currentSong.isFavorite;
-            if (currentSong.isFavorite) {
-                console.log("Song is now favorite.");
-                event.target.classList.add('isFavorite');
-                favorited.push(currentSong);
-            } else {
-                console.log("Song is no longer favorite.");
-                event.target.classList.remove('isFavorite');
-        
-                favorited = favorited.filter(song => song !== currentSong);
-            }
-        }
-    }
-    console.log(favorited)
-}
-
 
 // repeat function
 let isRepeatOn = false; 
@@ -379,7 +411,7 @@ document.addEventListener('click', function(event) {
         repeat()
     }
     if (event.target.classList.contains('heart')) {
-        favoriteToggle()
+        favoriteToggle(event)
         
     }
     if (event.target.classList.contains('bxs-volume-full')) {
@@ -391,8 +423,10 @@ document.addEventListener('click', function(event) {
 
 artists.addEventListener('click', (element) => {
     let content = document.querySelector('.content');
-    let allSongs = document.querySelector('.all-songs');
-    allSongs.style.display = 'none';
+
+    content.querySelectorAll(':not(.artists)').forEach(el => el.style.display="none");
+    
+    console.log('clicked')
 
     let artistCounts = songs.reduce((counts, song) => {
         counts[song.artistName] = (counts[song.artistName] || 0) + 1;
@@ -415,9 +449,15 @@ artists.addEventListener('click', (element) => {
 
 
 recently.addEventListener('click', recentlyPlayed)
-playlists.addEventListener('click', ()=>{
-    console.log('clicked')
-})
+
+playlistsNav.addEventListener('click', () => {
+    let content = document.querySelector('.content');
+
+    content.querySelectorAll(':not(.playlists)').forEach(el => el.style.display="none");
+   
+    let playlist = createPlaylist("allSongs", ".playlists");
+    content.appendChild(playlist)
+});
 
 /////////search functionality
 
