@@ -105,6 +105,10 @@ a{
 .artists,
 .favorites,
 .all-songs{
+    position: relative;
+    font-family: "Poppins", sans-serif;
+    height: 400px;
+    width: 100%;
     display: none;
 }
 .playing-state{
@@ -182,12 +186,6 @@ a{
     background-color: rgb(255, 153, 153);
     color: hsl(0, 100%, 65%);
 }
-.all-songs{
-    position: relative;
-    font-family: "Poppins", sans-serif;
-    height: 400px;
-    width: 100%;
-}
 .song-card{
     display: flex;
     align-items: center;
@@ -227,9 +225,13 @@ a{
     height: 50px;
 }
 .playlist-container{
-    display: grid;
+    /* display: grid; */
     grid-template-columns: repeat(4, 1fr);
-    gap: 1rem;
+    gap: 3rem;
+    margin-left: 2rem;
+}
+.playlist-card{
+    cursor: pointer;
 }
 .playlist-card img{
     display: inline-block;
@@ -329,5 +331,8 @@ a{
     }
     .vprogress.active{
         display: block;
+    }
+    .playlist-container{
+        grid-template-columns: repeat(2, 1fr);
     }
 }

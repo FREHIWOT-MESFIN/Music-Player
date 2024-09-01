@@ -1,8 +1,7 @@
-let allSongs = document.querySelector(".all-songs");
-allSongs.style.display = "block";
 
 
-function createSongCard(id, songName, artistName) {
+
+function createSongCard(id, songName, artistName, element) {
     let songCard = document.createElement("div");
     songCard.classList.add("song-card");
 
@@ -48,10 +47,13 @@ function createSongCard(id, songName, artistName) {
     songInfo1.appendChild(songDetails);
     songInfo1.appendChild(songEle);
 
+    let songsContainer = document.querySelector(element);
+    songsContainer.style.display = "block";
+
     songCard.appendChild(songInfo1);
     songCard.appendChild(controls);
     songCard.appendChild(duration);
-    allSongs.appendChild(songCard);
+    songsContainer.appendChild(songCard);
     return songCard
 }
 export { createSongCard };

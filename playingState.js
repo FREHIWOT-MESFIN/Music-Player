@@ -62,6 +62,7 @@ function playingState(audio, songName, artistName){
                 let i2 = document.createElement("span");
                 i2.innerHTML = " <i class='bx bx-skip-previous bx-md'></i>";
                 let i3 = document.createElement("span");
+                i3.innerHTML = "<i class='bx bx-play bx-md'></i>";
                 i3.classList.add('thePlayBtn')
                 let i4 = document.createElement("span");
                 i4.innerHTML = "<i class='bx bx-skip-next bx-md'></i>";
